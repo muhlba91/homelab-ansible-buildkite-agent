@@ -2,8 +2,10 @@
 
 set -eo pipefail
 
+{% if organization.doppler is defined %}
 # doppler token
 export DOPPLER_TOKEN="{{ organization.doppler.token | b64decode }}"
+{% endif %}
 
 # gcp credentials
 export GOOGLE_APPLICATION_CREDENTIALS="/var/lib/buildkite-agent/.gcp/{{ organization.name }}/credentials.json"

@@ -39,6 +39,8 @@ buildkite_organizations:
   - name: org
     spawn: 1
     token: token
+    doppler:
+      token: token
     minio:
       bucket: bucket
       endpoint: endpoint

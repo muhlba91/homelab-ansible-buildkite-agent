@@ -1,0 +1,10 @@
+---
+- name: AWS CLI | Download
+  ansible.builtin.unarchive:
+    src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /
+    remote_src: true
+
+- name: AWS CLI | Install
+  ansible.builtin.command: /aws/install --update
+  changed_when: false

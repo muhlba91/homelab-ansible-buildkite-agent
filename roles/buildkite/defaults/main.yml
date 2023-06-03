@@ -1,0 +1,28 @@
+---
+buildkite_agent_version: 3.42.0-4984
+buildkite_environment: dev
+buildkite_ssh_key: ssh
+buildkite_organizations:
+  - name: org
+    spawn: 1
+    token: token
+    minio:
+      bucket: bucket
+      endpoint: endpoint
+      region: region
+      access_key: access_key
+      secret_access_key: secret_access_key
+    aws:
+      bucket: bucket
+      endpoint: endpoint
+      region: region
+      access_key: access_key
+      secret_access_key: secret_access_key
+    gcp:
+      bucket: bucket
+      key: endpoint
+      access_key: access_key
+      secret_access_key: secret_access_key
+buildkite_additional_env:
+  - name: BUILDKITE_PLUGIN_DOCKER_PROPAGATION_LIST
+    value: GCS_ACCESS_KEY_ID GCS_SECRET_ACCESS_KEY

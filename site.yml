@@ -1,0 +1,46 @@
+---
+- name: Docker
+  hosts: all
+  gather_facts: true
+  any_errors_fatal: true
+  tags:
+    - docker
+  roles:
+    - docker
+
+- name: AWS CLI
+  hosts: all
+  gather_facts: true
+  any_errors_fatal: true
+  tags:
+    - aws
+  roles:
+    - aws
+
+- name: GCP CLI
+  hosts: all
+  gather_facts: true
+  any_errors_fatal: true
+  tags:
+    - gcp
+  roles:
+    - gcp
+
+- name: Doppler CLI
+  hosts: all
+  gather_facts: true
+  any_errors_fatal: true
+  tags:
+    - doppler
+  roles:
+    - doppler
+
+- name: Buildkite Agent
+  hosts: all
+  gather_facts: true
+  any_errors_fatal: true
+  tags:
+    - buildkite
+    - agent
+  roles:
+    - buildkite

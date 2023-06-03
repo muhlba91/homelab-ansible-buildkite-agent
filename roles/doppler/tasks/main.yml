@@ -1,0 +1,23 @@
+---
+- name: Doppler | Apt Repository
+  block:
+    - name: Repository Key
+      ansible.builtin.get_url:
+        url: https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key
+        dest: /usr/share/keyrings/doppler.asc
+        mode: "0644"
+    - name: Repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/doppler.asc] https://packages.doppler.com/public/cli/deb/debian {{ os_release }} main stable"
+        state: present
+        filename: doppler
+
+- name: Doppler | Apt Cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Doppler | Install
+  ansible.builtin.package:
+    name:
+      - doppler
+    state: latest

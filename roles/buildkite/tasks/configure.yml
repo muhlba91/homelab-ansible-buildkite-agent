@@ -1,0 +1,6 @@
+---
+- name: Buildkite | Configure | Organization
+  ansible.builtin.include_tasks: configure_organization.yml
+  loop: "{{ buildkite_organizations }}"
+  loop_control:
+    loop_var: organization

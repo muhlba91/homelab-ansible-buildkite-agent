@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -eo pipefail
+
+# aws credentials
+export AWS_REGION="{{ organization.aws.region }}"
+export AWS_ACCESS_KEY_ID="{{ organization.aws.access_key | b64decode }}"
+export AWS_SECRET_ACCESS_KEY="{{ organization.aws.secret_access_key | b64decode }}"
+
+# gcp credentials
+export GOOGLE_APPLICATION_CREDENTIALS="/var/lib/buildkite-agent/.gcp/{{ organization.name }}/credentials.json"
+export GCS_ACCESS_KEY_ID="{{ organization.gcp.access_key | b64decode }}"
+export GCS_SECRET_ACCESS_KEY="{{ organization.gcp.secret_access_key | b64decode }}"
+
+# minio credentials file
+export AWS_SHARED_CREDENTIALS_FILE="/var/lib/buildkite-agent/.aws/{{ organization.name }}/credentials"
+
+# caching
+export BUILDKITE_PLUGIN_CACHE_BACKEND="s3"
+export BUILDKITE_PLUGIN_CACHE_COMPRESS=2
+export BUILDKITE_PLUGIN_CACHE_PR=false
+export BUILDKITE_PLUGIN_CACHE_S3_PROFILE="minio-{{ organization.name }}"
+export BUILDKITE_PLUGIN_CACHE_S3_BUCKET="{{ organization.minio.bucket }}"
+export BUILDKITE_PLUGIN_CACHE_S3_ENDPOINT="{{ organization.minio.endpoint }}"
+export BUILDKITE_PLUGIN_CACHE_S3_REGION="{{ organization.minio.region }}"
+
+# artifacts - NOT WORKING WITH MINIO, we use an S3 bucket instead
+export BUILDKITE_ARTIFACT_UPLOAD_DESTINATION="gs://{{ organization.gcp.bucket }}/\${BUILDKITE_ORGANIZATION_SLUG}/\${BUILDKITE_PIPELINE_SLUG}/\${BUILDKITE_BUILD_ID}/\${BUILDKITE_JOB_ID}/"
+#export BUILDKITE_S3_DEFAULT_REGION="{{ organization.aws.region }}"
+#export BUILDKITE_S3_ACCESS_KEY_ID="{{ organization.aws.access_key | b64decode }}"
+#export BUILDKITE_S3_SECRET_ACCESS_KEY="{{ organization.aws.secret_access_key | b64decode }}"
+#export BUILDKITE_S3_ACL="private"
+export BUILDKITE_GS_ACL="projectPrivate"
+export BUILDKITE_GS_APPLICATION_CREDENTIALS="/var/lib/buildkite-agent/.gcp/{{ organization.name }}/credentials.json"
+export BUILDKITE_GCS_ACCESS_HOST="storage.cloud.google.com"
+
+# additional env
+{% for additional_env in buildkite_additional_env %}
+export {{ additional_env.name }}="{{ additional_env.value }}"
+{% endfor %}

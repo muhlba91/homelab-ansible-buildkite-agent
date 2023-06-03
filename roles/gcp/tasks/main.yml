@@ -1,0 +1,23 @@
+---
+- name: GCP CLI | Apt Repository
+  block:
+    - name: Repository Key
+      ansible.builtin.get_url:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        dest: /usr/share/keyrings/google.asc
+        mode: "0644"
+    - name: Repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/google.asc] https://packages.cloud.google.com/apt cloud-sdk main"
+        state: present
+        filename: gcp
+
+- name: GCP CLI | Apt Cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: GCP CLI | Install
+  ansible.builtin.package:
+    name:
+      - google-cloud-cli
+    state: latest

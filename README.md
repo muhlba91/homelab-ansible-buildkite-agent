@@ -47,12 +47,6 @@ buildkite_organizations:
       region: region
       access_key: access_key
       secret_access_key: secret_access_key
-    aws:
-      bucket: bucket
-      endpoint: endpoint
-      region: region
-      access_key: access_key
-      secret_access_key: secret_access_key
     gcp:
       bucket: bucket
       key: endpoint

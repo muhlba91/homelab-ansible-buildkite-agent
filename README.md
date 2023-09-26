@@ -64,7 +64,7 @@ Installs [Docker](http://docker.com).
 Example configuration:
 
 ```yaml
-os_release: bullseye
+os_release: bookworm
 ```
 
 ### Doppler
@@ -74,7 +74,7 @@ Installs the [Doppler CLI](https://docs.doppler.com/docs/cli).
 Example configuration:
 
 ```yaml
-os_release: bullseye
+os_release: bookworm
 ```
 
 ### GCP CLI

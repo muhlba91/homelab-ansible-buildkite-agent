@@ -17,9 +17,7 @@ env:
 
 jobs:
   deploy:
-    runs-on:
-      - tuxnet
-      - vpn
+    runs-on: ubuntu-latest
     name: Deployment
     strategy:
       max-parallel: 4
@@ -56,5 +54,11 @@ jobs:
           ./.ci/download_assets.sh "${{ inputs.s3_asset_bucket }}" inventory
           chmod 0600 inventory/ssh.key
 
+      - uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:github-actions
+      
       - run: |
           ansible-playbook -i inventory/inventory.yml --extra-vars ansible_ssh_private_key_file=inventory/ssh.key site.yml
